@@ -9,7 +9,7 @@ const Navigation = () => {
   const { cityKey: cityKeyParam } = useParams()
   let cityKey = locationState?.state?.cityKey
   if (!cityKey) {
-    cityKey = cityKeyParam
+    cityKey = cityKeyParam || "215854"
   }
 
   const loggedInLinks = [{ to: "/favorites", text: "Favorites" }]
