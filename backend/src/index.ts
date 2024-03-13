@@ -89,7 +89,10 @@ function getSession(req: Request, res: Response<any, Record<string, any>>) {
   return getIronSession<DWSession>(req, res, {
     password: process.env.IRON_SESSION_PASS ?? "",
     cookieName: "session",
-    cookieOptions: { secure: true, path: "/", sameSite: "none" },
+    cookieOptions:
+      process.env?.APP_ENV === "dev"
+        ? { secure: false, sameSite: "lax" }
+        : { secure: true, path: "/", sameSite: "none" },
   });
 }
 
