@@ -43,7 +43,7 @@ const Weather = () => {
     <>
       <Search />
       <Stack direction={{ sm: "row" }} mt="1em" gap={2}>
-        <Box sx={{ width: { sm: "33%" } }}>
+        <Box sx={{ width: { sm: "50vw", md: "33%" } }}>
           <CurrentConditions cityKey={cityKey ?? ""} />
         </Box>
         <Box display={{ xs: "flex", sm: "block" }}>
