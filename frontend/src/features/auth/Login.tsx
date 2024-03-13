@@ -46,7 +46,7 @@ export default function LoginOrRegister({ type}: {type: string }) {
   return (
     <Box alignItems="center" display="flex" justifyContent="center" onSubmit={handleSubmit(onSubmit)} component="form">
       <Stack width={200} gap={1} alignItems="center" justifyContent="center">
-        <h1>{type === "register" ? "Register" : "Login"}</h1>
+        <h1>{type === "register" ? "Sign up" : "Login"}</h1>
         {error && (
           <Alert
             sx={{ minWidth: 300 }}
