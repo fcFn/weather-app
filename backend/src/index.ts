@@ -33,7 +33,7 @@ interface DWSession {
   username: string;
 }
 app.get("/user", user);
-app.post("/login", login());
+app.post("/login", login);
 app.post("/register", register);
 app.get("/logout", logout);
 
@@ -45,27 +45,25 @@ const db = drizzle(client);
 
 app.listen(3000, () => console.log("Server running on port 3000"));
 
-function login() {
-  return async (req: Request, res: Response) => {
-    const session = await getSession(req, res);
-    const { password, username } = req.body;
-    const [user] = await db
-      .select()
-      .from(users)
-      .where(eq(users.username, username));
-    if (user) {
-      const match = await bcrypt.compare(password, user.password);
-      if (match) {
-        session.username = username;
-        await session.save();
-        return res
-          .status(200)
-          .json({ message: "OK", user: { username, isLoggedIn: true } });
-      }
+async function login(req: Request, res: Response) {
+  const session = await getSession(req, res);
+  const { password, username } = req.body;
+  const [user] = await db
+    .select()
+    .from(users)
+    .where(eq(users.username, username));
+  if (user) {
+    const match = await bcrypt.compare(password, user.password);
+    if (match) {
+      session.username = username;
+      await session.save();
+      return res
+        .status(200)
+        .json({ message: "OK", user: { username, isLoggedIn: true } });
     }
-    await session.destroy();
-    res.status(401).json({ message: "Incorrect username or password!" });
-  };
+  }
+  await session.destroy();
+  res.status(401).json({ message: "Incorrect username or password!" });
 }
 
 async function user(req: Request, res: Response) {
@@ -76,14 +74,12 @@ async function user(req: Request, res: Response) {
       .from(users)
       .where(eq(users.username, session.username));
     if (user) {
-      return res
-        .status(200)
-        .json({
-          user: {
-            username: user.username,
-            favorites: JSON.parse(user.favorites || "[]"),
-          },
-        });
+      return res.status(200).json({
+        user: {
+          username: user.username,
+          favorites: JSON.parse(user.favorites || "[]"),
+        },
+      });
     }
   }
   await session.destroy();
