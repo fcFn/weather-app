@@ -2,7 +2,7 @@ import "@fontsource/roboto/300.css"
 import "@fontsource/roboto/400.css"
 import "@fontsource/roboto/500.css"
 import "@fontsource/roboto/700.css"
-import { Container } from "@mui/material"
+import { Box, Container } from "@mui/material"
 import CssBaseline from "@mui/material/CssBaseline"
 import { Navigate, Outlet, RouterProvider, createBrowserRouter } from "react-router-dom"
 import "./App.css"
@@ -16,6 +16,20 @@ const router = createBrowserRouter([
     path: "/",
     element: (
       <Container maxWidth="lg" className="App">
+        <Box
+          component="h1"
+          margin="0.5rem"
+          sx={{ backgroundColor: "rgb(57, 160, 228)", color: "white", transform: "skew(-30deg)" }}
+          display="inline-block"
+          paddingX="1em"
+        >
+          <Box sx={{ transform: `skew(30deg)` }}>
+            <span>Weath</span>
+            <Box component="span" sx={{ color: "cyan", fontStyle: "italic" }}>
+              r
+            </Box>
+          </Box>
+        </Box>
         <Navigation />
 
         <Outlet />
@@ -45,7 +59,7 @@ const App = () => {
     <>
       <CssBaseline />
       <RouterProvider router={router} />
-      <span style={{ position: "absolute", bottom: "0", right: "0" }}>
+      <span style={{ position: "fixed", bottom: "0", right: "0" }}>
         Data by <a href="https://www.accuweather.com">AccuWeather</a>
       </span>
     </>
