@@ -42,11 +42,11 @@ const Weather = () => {
   return (
     <>
       <Search />
-      <Stack direction="row" mt="1em" gap={2}>
+      <Stack direction={{ sm: "row" }} mt="1em" gap={2}>
         <Box sx={{ width: { sm: "33%" } }}>
           <CurrentConditions cityKey={cityKey ?? ""} />
         </Box>
-        <Box>
+        <Box display={{ xs: "flex", sm: "block" }}>
           {cityKey && !userIsLoading && user?.username && (
             <Button
               variant="outlined"
