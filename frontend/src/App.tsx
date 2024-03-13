@@ -5,6 +5,7 @@ import "@fontsource/roboto/700.css"
 import { Box, Container } from "@mui/material"
 import CssBaseline from "@mui/material/CssBaseline"
 import { Navigate, Outlet, RouterProvider, createBrowserRouter } from "react-router-dom"
+import AccuWeatherLogo from "../assets/accuweather_logo.svg"
 import "./App.css"
 import Login from "./features/auth/Login"
 import Favorites from "./features/favorites/Favorites"
@@ -60,7 +61,14 @@ const App = () => {
       <CssBaseline />
       <RouterProvider router={router} />
       <span style={{ position: "fixed", bottom: "0", right: "0" }}>
-        Data by <a href="https://www.accuweather.com">AccuWeather</a>
+        Data by{" "}
+        <a href="https://www.accuweather.com">
+          <img
+            style={{ height: "16px", verticalAlign: "text-top", paddingRight: "5px" }}
+            alt="Accuweather logo"
+            src={AccuWeatherLogo}
+          />
+        </a>
       </span>
     </>
   )
