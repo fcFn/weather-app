@@ -7,8 +7,12 @@ import { useGetUserQuery } from "../api/apiSlice.js"
 import CurrentConditions from "../weather/CurrentConditions.js"
 
 const Favorites = () => {
-  const { data: user, isLoading } = useGetUserQuery()
+  const { data: user, isLoading, isError } = useGetUserQuery()
   const navigate = useNavigate()
+
+  if (isError) {
+    navigate("/login")
+  }
 
   return (
     <div>
@@ -16,21 +20,21 @@ const Favorites = () => {
       {isLoading ? (
         <div>Loading...</div>
       ) : (
-        <Stack direction={{ sm: "row" }} useFlexGap flexWrap="wrap" spacing={2}>
-          {user?.favorites?.map((cityKey, index) => (
-            <Box
-              key={index}
-              sx={{
-                cursor: "pointer",
-                marginTop: { xs: "16px" },
-                width: { sm: "calc(50% - 16px)", md: "calc(25% - 16px)" },
-              }}
-            >
-              <CurrentConditions onClick={() => navigate(`/weather/${cityKey}`)} cityKey={cityKey} />
-            </Box>
-          ))}
-        </Stack>
-      )}
+                  <Stack direction={{ sm: "row" }} useFlexGap flexWrap="wrap" spacing={2}>
+            {user?.favorites?.map((cityKey, index) => (
+              <Box
+                key={index}
+                sx={{
+                  cursor: "pointer",
+                  marginTop: { xs: "16px" },
+                  width: { sm: "calc(50% - 16px)", md: "calc(25% - 16px)" },
+                }}
+              >
+                <CurrentConditions onClick={() => navigate(`/weather/${cityKey}`)} cityKey={cityKey} />
+              </Box>
+            ))}
+          </Stack>
+              )}
     </div>
   )
 }
