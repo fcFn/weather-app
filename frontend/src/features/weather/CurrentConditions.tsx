@@ -2,8 +2,8 @@ import { useGetCurrentConditionsQuery, useGetLocationQuery } from "../api/apiSli
 import CurrentWeatherBox from "./WeatherBox.js"
 
 const CurrentConditions = ({ cityKey, onClick }: {cityKey: string, onClick?: () => void }) => {
-  const { data, isLoading, isFetching } = useGetCurrentConditionsQuery(cityKey)
-  const { data: cityData, isLoading: cityDataIsLoading, isFetching: cityDataIsFetching } = useGetLocationQuery(cityKey)
+  const { data } = useGetCurrentConditionsQuery(cityKey)
+  const { data: cityData } = useGetLocationQuery(cityKey)
 
   return <CurrentWeatherBox onClick={onClick} cityData={cityData} weatherData={data} />
 }

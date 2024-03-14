@@ -26,20 +26,7 @@ export const apiSlice = createApi({
         method: "GET",
       }),
       transformResponse: (response: { user: User }) => response.user,
-      providesTags: ["User"],
-      onQueryStarted: async (arg, { queryFulfilled, getCacheEntry, dispatch }) => {
-        try {
-          await queryFulfilled
-        } catch {
-          const data = getCacheEntry().data
-          if (data?.username) {
-            // We can use this to remove the cached data when the getUser is rejected, because
-            // the default behavior for RTK Query is to keep the cached data when the query is rejected
-            // due to an error
-            dispatch(apiSlice.util.upsertQueryData("getUser", arg, { id: null, username: null }))
-          }
-        }
-      },
+      providesTags: ["User"]
     }),
     authUser: build.mutation<User, Credentials>({
       query: credentials => ({

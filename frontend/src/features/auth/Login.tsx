@@ -4,7 +4,6 @@ import { useState } from "react"
 import type { SubmitHandler } from "react-hook-form"
 import { Controller, useForm } from "react-hook-form"
 import { useLocation, useNavigate } from "react-router"
-import { useAppDispatch } from "../../app/hooks.js"
 import { useAuthUserMutation, useRegisterUserMutation } from "../api/apiSlice"
 interface IFormInput {
   username: string
@@ -13,10 +12,9 @@ interface IFormInput {
 
 export default function LoginOrRegister({ type}: {type: string }) {
   const navigate = useNavigate()
-  const [registerUser, registerResponse] = useRegisterUserMutation()
-  const dispatch = useAppDispatch()
+  const [registerUser] = useRegisterUserMutation()
   const location = useLocation()
-  const [authUser, authResponse] = useAuthUserMutation()
+  const [authUser] = useAuthUserMutation()
   const [error, setError] = useState<null | string>(null)
 
   const { control, handleSubmit } = useForm({
@@ -32,7 +30,7 @@ export default function LoginOrRegister({ type}: {type: string }) {
       mutation = registerUser
     } else mutation = authUser
     try {
-      const user = await mutation({ username: data.username, password: data.password }).unwrap()
+      await mutation({ username: data.username, password: data.password }).unwrap()
       if (type === "register") {
         navigate("/login", { state: { message: "Successfully registered! You can now login!" } })
       } else {
