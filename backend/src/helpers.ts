@@ -22,6 +22,7 @@ export function createCachedHandler(
         result = transformResponse(result);
       }
       await redis.hSet(redisKey, query, JSON.stringify(result));
+      setRedisKeyExpiry();
     } else {
       result = JSON.parse(cached);
     }
@@ -32,11 +33,14 @@ export function createCachedHandler(
 export async function setRedisKeyExpiry() {
   // Expire the cache after 24 hours
   // (except location and city search suggestions that are cached forever)
-  // Redis version on Render is <7 and so we have to check for expiry ourselves
-  if (await redis.expireTime("forecast") === -1) {
-    await redis.expire("forecast", 60 * 60 * 24);
-  }
-  if (await redis.expireTime("current") === -1) {
+  // Redis version on Render is <7 and doesn't have EXPIRETIME so we have to
+  // keep a flag ourselves to prevent resetting the timer
+  if (!(await redis.hGet("current", "expirySet"))) {
     await redis.expire("current", 60 * 60 * 24);
+    await redis.hSet("current", "expirySet", "1");
+  }
+  if (!(await redis.hGet("forecast", "expirySet"))) {
+    await redis.expire("forecast", 60 * 60 * 24);
+    await redis.hSet("forecast", "expirySet", "1");
   }
 }
