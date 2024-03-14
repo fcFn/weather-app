@@ -31,11 +31,11 @@ export interface WeatherData {
 const Weather = () => {
   const { data: user, isLoading: userIsLoading } = useGetUserQuery()
   let { cityKey } = useParams()
-  const { data, isLoading, isFetching } = useGetLocationQuery(cityKey)
+  const { data, isLoading, isFetching, isError } = useGetLocationQuery(cityKey)
   const [addFavorite] = useAddFavoriteMutation()
   const [removeFavorite] = useRemoveFavoriteMutation()
 
-  if (isLoading || isFetching) {
+  if (isLoading || isFetching || isError) {
     return <div>Loading...</div>
   }
 
