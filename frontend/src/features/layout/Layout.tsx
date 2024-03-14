@@ -11,7 +11,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       <Box
         component="h1"
         margin="0.5rem"
-        sx={{ backgroundColor: "rgb(57, 160, 228)", color: "white", transform: "skew(-30deg)" }}
+        sx={{ backgroundColor: "rgb(57, 160, 228)", color: "white", transform: "skew(-30deg)", borderRadius: "40px" }}
         display="inline-block"
         paddingX="1em"
       >
