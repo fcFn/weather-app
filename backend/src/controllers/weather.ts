@@ -22,3 +22,8 @@ export const autocompleteLocation = createCachedHandler(
       city: item.LocalizedName,
     }))
 );
+export const forecast = createCachedHandler(
+  "forecast",
+  query =>
+    `https://dataservice.accuweather.com/forecasts/v1/daily/5day/${query}?apikey=${process.env.ACCUWEATHER_API_KEY}&metric=true`
+);
