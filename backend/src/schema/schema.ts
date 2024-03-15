@@ -9,15 +9,22 @@ export const users = pgTable("users", {
   favorites: varchar("favorites").default("[]").notNull(),
 });
 
-export async function getUserByUsername(username: string) {
+interface User {
+  id: number;
+  username: string;
+  password: string;
+  favorites: string[];
+}
+
+export async function getUserByUsername(username: string): Promise<User | null>{
   const [user] = await db
     .select()
     .from(users)
     .where(eq(users.username, username));
-  return {
+  return user ? {
     ...user,
     favorites: JSON.parse(user.favorites ?? "[]") as string[],
-  };
+  } : null;
 }
 
 export async function createUser(username: string, hash: string) {
@@ -27,7 +34,7 @@ export async function createUser(username: string, hash: string) {
   });
 }
 export async function addFavorite(
-  user: Awaited<ReturnType<typeof getUserByUsername>>,
+  user: User,
   cityKey: string
 ) {
   await db
@@ -36,7 +43,7 @@ export async function addFavorite(
     .where(eq(users.username, user.username));
 }
 export async function removeFavorite(
-  user: Awaited<ReturnType<typeof getUserByUsername>>,
+  user: User,
   cityKey: string
 ) {
   await db
