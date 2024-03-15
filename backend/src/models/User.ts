@@ -41,7 +41,10 @@ export class User {
   }
 
   public static async getUserByUsername(username: string): Promise<User | null> {
-    const [user] = await db.select().from(users).where(eq(sql`lower(${users.username})`, sql`lower(${username})`))
+    const [user] = await db
+      .select()
+      .from(users)
+      .where(eq(sql`lower(${users.username})`, sql`lower(${username})`))
     return user ? new User(user.id, user.username, user.password, JSON.parse(user.favorites || "[]")) : null
   }
 
