@@ -1,3 +1,4 @@
+import { LoadingButton } from "@mui/lab"
 import { Alert, Box, Button, Stack } from "@mui/material"
 import TextField from "@mui/material/TextField"
 import { useState } from "react"
@@ -5,7 +6,6 @@ import type { SubmitHandler } from "react-hook-form"
 import { Controller, useForm } from "react-hook-form"
 import { useLocation, useNavigate } from "react-router"
 import { useAuthUserMutation, useRegisterUserMutation } from "../api/apiSlice"
-import { LoadingButton } from "@mui/lab"
 interface IFormInput {
   username: string
   password: string
@@ -33,10 +33,6 @@ export default function LoginOrRegister({ type }: { type: string }) {
       mutation = registerUser
     } else mutation = authUser
     try {
-      // Usernames can only have ASCII
-      if (!/^[a-zA-Z0-9]+$/.test(data.username)) {
-        throw new Error("Username can only contain letters and numbers")
-      }
       await mutation({ username: data.username, password: data.password }).unwrap()
       if (type === "register") {
         navigate("/login", { state: { message: "Successfully registered! You can now login!" } })
@@ -69,14 +65,40 @@ export default function LoginOrRegister({ type }: { type: string }) {
           </Alert>
         )}
         <Controller
+          rules={{
+            required: { value: true, message: "Username is required" },
+            minLength: { value: 3, message: "Username must be at least 3 characters" },
+            maxLength: { value: 20, message: "Username must be at most 20 characters" },
+            pattern: { value: /^[a-zA-Z0-9]+$/, message: "Username must contain only letters and numbers" },
+          }}
           name="username"
           control={control}
-          render={({ field }) => <TextField label="Username" {...field} />}
+          render={({ field, formState }) => (
+            <TextField
+              helperText={formState?.errors?.username?.message}
+              error={!!formState.errors?.username}
+              label="Username"
+              {...field}
+            />
+          )}
         />
         <Controller
+          rules={{
+            required: { value: true, message: "Password is required" },
+            minLength: { value: 6, message: "Password must be at least 6 characters" },
+          }}
           name="password"
           control={control}
-          render={({ field }) => <TextField label="Password" type="password" {...field} />}
+          render={({ field, formState }) => (
+            <TextField
+              autoComplete={type === "register" ? "new-password" : "current-password"}
+              helperText={formState?.errors?.password?.message}
+              error={!!formState?.errors?.password}
+              label="Password"
+              type="password"
+              {...field}
+            />
+          )}
         />
         <Box width="100%" display="flex" justifyContent="space-between">
           <Button onClick={() => navigate(-1)}>Go back</Button>
