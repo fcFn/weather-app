@@ -32,7 +32,7 @@ const Search = () => {
     ;(async () => {
       // This is needed so that we don't fetch suggestions after selecting
       // an option
-      if (value?.city === inputValue) {
+      if (`${value?.city}, ${value?.country}` === inputValue) {
         return undefined
       }
       if (inputValue === "") {
