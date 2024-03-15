@@ -6,8 +6,8 @@ export const rtkQueryGenericErrorHandler: Middleware = (api: MiddlewareAPI) => n
   if (isRejectedWithValue(action)) {
     api.dispatch(
       displaySnackbar({
-        message: 'An error occurred. Please try again later.',
-        severity: 'error'
+        message: "An error occurred. Please try again later.",
+        severity: "error",
       }),
     )
   }

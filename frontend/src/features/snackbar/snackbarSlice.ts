@@ -21,9 +21,9 @@ export const snackbarSlice = createSlice({
       state.message = action.payload.message
       state.severity = action.payload.severity
     },
-    closeSnackbar: (state) => {
+    closeSnackbar: state => {
       state.open = false
-    }
+    },
   },
 })
 

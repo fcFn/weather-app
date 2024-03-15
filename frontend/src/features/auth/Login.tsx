@@ -5,7 +5,7 @@ import type { SubmitHandler } from "react-hook-form"
 import { Controller, useForm } from "react-hook-form"
 import { useLocation, useNavigate } from "react-router"
 import { useAuthUserMutation, useRegisterUserMutation } from "../api/apiSlice"
-import {LoadingButton} from "@mui/lab"
+import { LoadingButton } from "@mui/lab"
 interface IFormInput {
   username: string
   password: string
@@ -13,9 +13,9 @@ interface IFormInput {
 
 export default function LoginOrRegister({ type }: { type: string }) {
   const navigate = useNavigate()
-  const [registerUser, {isLoading: isRegisterLoading}] = useRegisterUserMutation()
+  const [registerUser, { isLoading: isRegisterLoading }] = useRegisterUserMutation()
   const location = useLocation()
-  const [authUser, {isLoading: isAuthLoading}] = useAuthUserMutation()
+  const [authUser, { isLoading: isAuthLoading }] = useAuthUserMutation()
   const [error, setError] = useState<null | string>(null)
 
   const { control, handleSubmit } = useForm({

@@ -80,15 +80,15 @@ const Search = () => {
           // of showing the options when the input is empty.
           // If value has non-English letters, display an error
           if (newInputValue.match(/[^a-zA-Z\s]/g)) {
-              setHelperText("Only English letters are allowed")
-              setError(true)
-              return setOpen(false)
-            } else {
-                setHelperText("")
-                setError(false)
-            }
-            
-          const value = newInputValue.replace(/[^a-zA-Z\s]/g, "") 
+            setHelperText("Only English letters are allowed")
+            setError(true)
+            return setOpen(false)
+          } else {
+            setHelperText("")
+            setError(false)
+          }
+
+          const value = newInputValue.replace(/[^a-zA-Z\s]/g, "")
           if (value.length) {
             setOpen(true)
           } else {

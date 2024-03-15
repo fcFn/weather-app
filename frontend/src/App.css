@@ -39,11 +39,11 @@
 }
 
 .link-button {
-    background: none!important;
-    border: none;
-    padding: 0!important;
-    color: -webkit-link;
-    text-decoration: underline;
-    cursor: pointer;
-    font-size: inherit;
+  background: none !important;
+  border: none;
+  padding: 0 !important;
+  color: -webkit-link;
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: inherit;
 }

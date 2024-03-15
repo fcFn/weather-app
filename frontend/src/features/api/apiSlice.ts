@@ -26,7 +26,7 @@ export const apiSlice = createApi({
         method: "GET",
       }),
       transformResponse: (response: { user: User }) => response.user,
-      providesTags: ["User"]
+      providesTags: ["User"],
     }),
     authUser: build.mutation<User, Credentials>({
       query: credentials => ({

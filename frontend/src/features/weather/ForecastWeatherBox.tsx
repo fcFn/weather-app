@@ -22,7 +22,15 @@ interface DailyForecastDay {
   }
 }
 
-const ForecastWeatherBox = ({ day, isLoading, isFetching }: { day: DailyForecastDay; isLoading: boolean, isFetching: boolean }) => {
+const ForecastWeatherBox = ({
+  day,
+  isLoading,
+  isFetching,
+}: {
+  day: DailyForecastDay
+  isLoading: boolean
+  isFetching: boolean
+}) => {
   return (
     <Card sx={{ height: "100%" }}>
       <CardContent sx={{ display: "flex", flexDirection: "column", justifyContent: "space-between", height: "100%" }}>
@@ -39,7 +47,7 @@ const ForecastWeatherBox = ({ day, isLoading, isFetching }: { day: DailyForecast
         {isLoading || isFetching ? (
           <Skeleton variant="text" />
         ) : (
-          <p style={{ flex: "1 0 auto"}}>{day.Day.IconPhrase}</p>
+          <p style={{ flex: "1 0 auto" }}>{day.Day.IconPhrase}</p>
         )}
         {isLoading || isFetching ? (
           <Skeleton variant="text" />

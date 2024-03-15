@@ -1,8 +1,8 @@
-import { getIronSession } from "iron-session";
-import type {Request, Response} from "express";
+import { getIronSession } from "iron-session"
+import type { Request, Response } from "express"
 export interface DWSession {
-  id: number,
-  username: string;
+  id: number
+  username: string
 }
 async function getSession(req: Request, res: Response) {
   const session = await getIronSession<DWSession>(req, res, {
@@ -12,12 +12,12 @@ async function getSession(req: Request, res: Response) {
       process.env?.APP_ENV === "dev"
         ? { secure: false, sameSite: "lax" }
         : { secure: true, path: "/", sameSite: "none" },
-  });
+  })
   return session
 }
 
 export default async function session(req: Request, res: Response, next: any) {
-  const session = await getSession(req, res);
-  res.locals.session = session;
-  next();
+  const session = await getSession(req, res)
+  res.locals.session = session
+  next()
 }
