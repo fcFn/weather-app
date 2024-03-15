@@ -13,7 +13,7 @@ export class User {
   public async addFavorite(cityKey: string) {
     await db
       .update(users)
-      .set({ favorites: JSON.stringify([this.favorites, cityKey]) })
+      .set({ favorites: JSON.stringify([...this.favorites, cityKey]) })
       .where(eq(users.id, this.id))
   }
   public async removeFavorite(cityKey: string) {
