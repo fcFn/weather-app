@@ -5,16 +5,17 @@ import type { SubmitHandler } from "react-hook-form"
 import { Controller, useForm } from "react-hook-form"
 import { useLocation, useNavigate } from "react-router"
 import { useAuthUserMutation, useRegisterUserMutation } from "../api/apiSlice"
+import {LoadingButton} from "@mui/lab"
 interface IFormInput {
   username: string
   password: string
 }
 
-export default function LoginOrRegister({ type}: {type: string }) {
+export default function LoginOrRegister({ type }: { type: string }) {
   const navigate = useNavigate()
-  const [registerUser] = useRegisterUserMutation()
+  const [registerUser, {isLoading: isRegisterLoading}] = useRegisterUserMutation()
   const location = useLocation()
-  const [authUser] = useAuthUserMutation()
+  const [authUser, {isLoading: isAuthLoading}] = useAuthUserMutation()
   const [error, setError] = useState<null | string>(null)
 
   const { control, handleSubmit } = useForm({
@@ -23,6 +24,8 @@ export default function LoginOrRegister({ type}: {type: string }) {
       password: "",
     },
   })
+
+  const isLoading = type === "register" ? isRegisterLoading : isAuthLoading
 
   const onSubmit: SubmitHandler<IFormInput> = async data => {
     let mutation
@@ -36,7 +39,7 @@ export default function LoginOrRegister({ type}: {type: string }) {
       } else {
         navigate("/")
       }
-    } catch (error: any){
+    } catch (error: any) {
       setError(error.data.message)
     }
   }
@@ -73,9 +76,9 @@ export default function LoginOrRegister({ type}: {type: string }) {
         />
         <Box width="100%" display="flex" justifyContent="space-between">
           <Button onClick={() => navigate(-1)}>Go back</Button>
-          <Button type="submit" variant="contained">
+          <LoadingButton loading={isLoading} type="submit" variant="contained">
             Submit
-          </Button>
+          </LoadingButton>
         </Box>
       </Stack>
     </Box>
