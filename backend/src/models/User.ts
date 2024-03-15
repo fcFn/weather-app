@@ -1,6 +1,6 @@
 import { users } from "../schema/schema.js"
 
-import { eq, ne } from "drizzle-orm"
+import { eq, ne, sql } from "drizzle-orm"
 import { db } from "../database.js"
 
 export class User {
@@ -41,7 +41,7 @@ export class User {
   }
 
   public static async getUserByUsername(username: string): Promise<User | null> {
-    const [user] = await db.select().from(users).where(eq(users.username, username))
+    const [user] = await db.select().from(users).where(eq(sql`lower(${users.username})`, sql`lower(${username})`))
     return user ? new User(user.id, user.username, user.password, JSON.parse(user.favorites || "[]")) : null
   }
 

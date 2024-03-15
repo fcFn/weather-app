@@ -33,6 +33,10 @@ export default function LoginOrRegister({ type }: { type: string }) {
       mutation = registerUser
     } else mutation = authUser
     try {
+      // Usernames can only have ASCII
+      if (!/^[a-zA-Z0-9]+$/.test(data.username)) {
+        throw new Error("Username can only contain letters and numbers")
+      }
       await mutation({ username: data.username, password: data.password }).unwrap()
       if (type === "register") {
         navigate("/login", { state: { message: "Successfully registered! You can now login!" } })
