@@ -27,6 +27,17 @@ export async function getUserByUsername(username: string): Promise<User | null>{
   } : null;
 }
 
+export async function getUserById(id: number): Promise<User | null> {
+  const [user] = await db
+    .select()
+    .from(users)
+    .where(eq(users.id, id));
+  return user ? {
+    ...user,
+    favorites: JSON.parse(user.favorites ?? "[]") as string[],
+  } : null;
+}
+
 export async function createUser(username: string, hash: string) {
   return await db.insert(users).values({
     username,

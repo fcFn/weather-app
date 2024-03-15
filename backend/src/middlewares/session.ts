@@ -1,6 +1,7 @@
 import { getIronSession } from "iron-session";
 import type {Request, Response} from "express";
 export interface DWSession {
+  id: number,
   username: string;
 }
 async function getSession(req: Request, res: Response) {
