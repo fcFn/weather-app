@@ -1,7 +1,7 @@
 import type { Config } from "drizzle-kit"
 
 export default {
-  schema: "./src/backend/schema/*",
+  schema: "./src/schema/*",
   out: "./drizzle",
   driver: "pg",
   dbCredentials: {
