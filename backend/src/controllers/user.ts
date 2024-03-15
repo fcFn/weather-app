@@ -18,7 +18,7 @@ export async function getUser(req: Request, res: Response) {
       return res.status(200).json({
         user: {
           username: user.username,
-          favorites: user.favorites 
+          favorites: user.favorites,
         },
       });
     }
@@ -37,10 +37,8 @@ export async function login(req: Request, res: Response) {
       session.username = username;
       session.id = user.id;
       await session.save();
-      const {password, ...userWithoutPassword} = user
-      return res
-        .status(200)
-        .json({ message: "OK"});
+      const { password, ...userWithoutPassword } = user;
+      return res.status(200).json({ message: "OK" });
     }
   }
   await session.destroy();
@@ -84,7 +82,7 @@ export async function favorite(req: Request, res: Response) {
 }
 
 export async function logout(req: Request, res: Response) {
-  const session = res.locals.session;
+  const session = res.locals.session as IronSession<DWSession>;
   if (session) {
     session.destroy();
     await session.save();
