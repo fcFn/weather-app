@@ -1,5 +1,5 @@
 import { Autocomplete, Box, TextField, debounce } from "@mui/material"
-import React, { useState } from "react"
+import React, { useMemo, useRef, useState } from "react"
 import { useNavigate } from "react-router-dom"
 
 interface Place {
@@ -9,6 +9,7 @@ interface Place {
 }
 
 const Search = () => {
+  const nameRegex = useRef(/[^a-zA-Z\s'-,]/g)
   const [options, setOptions] = useState<Place[]>([])
   const [inputValue, setInputValue] = useState("")
   const [value, setValue] = useState<Place | null>(null)
@@ -17,7 +18,7 @@ const Search = () => {
   const [open, setOpen] = useState(false)
   const navigate = useNavigate()
 
-  const fetchSuggestions = React.useMemo(
+  const fetchSuggestions = useMemo(
     () =>
       debounce(async (request: { input: string }, callback: (results: Place[]) => void) => {
         let response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/search?q=${request.input}`)
@@ -43,7 +44,13 @@ const Search = () => {
           let newOptions: Place[] = []
 
           if (results) {
-            newOptions = results
+            // Strip non-English letters from the city and country names
+            // But leave - ' ,
+            newOptions = results.map((result: Place) => {
+              result.country = result.country.replace(nameRegex.current, "")
+              result.city = result.city.replace(nameRegex.current, "")
+              return result
+            })
           }
 
           setOptions(newOptions)
@@ -62,6 +69,8 @@ const Search = () => {
         getOptionLabel={option => (typeof option === "string" ? option : `${option.city}, ${option.country}`)}
         options={options}
         autoComplete
+        loading={open && options.length === 0}
+        loadingText="Loading..."
         includeInputInList
         noOptionsText="Nothing found"
         onChange={(event: any, newValue: Place | null) => {
@@ -70,7 +79,7 @@ const Search = () => {
             navigate(`/weather/${newValue.key}`)
           }
         }}
-        open={open && options.length > 0}
+        open={open}
         onClose={() => setOpen(false)}
         value={value}
         inputValue={inputValue}
@@ -78,7 +87,7 @@ const Search = () => {
           // The input is controlled to prevent the default behavior
           // of showing the options when the input is empty.
           // If value has non-English letters, display an error
-          if (newInputValue.match(/[^a-zA-Z\s]/g)) {
+          if (newInputValue.match(nameRegex.current)) {
             setHelperText("Only English letters are allowed")
             setError(true)
             return setOpen(false)
@@ -87,9 +96,10 @@ const Search = () => {
             setError(false)
           }
 
-          const value = newInputValue.replace(/[^a-zA-Z\s]/g, "")
+          const value = newInputValue.replace(nameRegex.current, "")
           if (value.length) {
             setOpen(true)
+            setOptions([])
           } else {
             setOpen(false)
           }
