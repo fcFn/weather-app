@@ -18,7 +18,7 @@ const Favorites = () => {
     <div>
       <h1>Favorites</h1>
       {isLoading ? (
-        <CircularProgress>Loading...</CircularProgress>
+        <CircularProgress/>
       ) : (
         <>
           {user?.favorites && user.favorites?.length > 0 ? (

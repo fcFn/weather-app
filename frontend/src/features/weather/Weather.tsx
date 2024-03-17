@@ -36,7 +36,7 @@ const Weather = () => {
   const [removeFavorite] = useRemoveFavoriteMutation()
 
   if (isLoading || isFetching || isError) {
-    return <CircularProgress>Loading...</CircularProgress>
+    return <CircularProgress/>
   }
 
   return (
