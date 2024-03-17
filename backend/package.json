@@ -11,7 +11,9 @@
     "drizzle-push": "drizzle-kit push:pg",
     "dev": "nodemon ./src/index.ts",
     "build": "tsc",
-    "start": "node ./dist/src/index.js"
+    "start": "node ./dist/src/index.js",
+    "migrate-generate": "drizzle-kit generate:pg",
+    "migrate": "ts-node --esm ./drizzle/migrate.ts"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
