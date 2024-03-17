@@ -2,16 +2,17 @@ import "@fontsource/roboto/300.css"
 import "@fontsource/roboto/400.css"
 import "@fontsource/roboto/500.css"
 import "@fontsource/roboto/700.css"
+import { ThemeProvider, createTheme } from "@mui/material"
 import CssBaseline from "@mui/material/CssBaseline"
-import { Navigate, Outlet, RouterProvider, createBrowserRouter } from "react-router-dom"
+import { createContext, useMemo, useState } from "react"
+import { Outlet, RouterProvider, createBrowserRouter } from "react-router-dom"
 import AccuWeatherLogo from "../assets/accuweather_logo.svg"
 import "./App.css"
 import Login from "./features/auth/Login"
 import Favorites from "./features/favorites/Favorites"
 import Layout from "./features/layout/Layout.js"
+import LocationWrapper from "./features/weather/LocationWrapper.js"
 import Weather from "./features/weather/Weather"
-import { ThemeProvider, createTheme } from "@mui/material"
-import { createContext, useState, useMemo } from "react"
 
 const router = createBrowserRouter([
   {
@@ -22,7 +23,7 @@ const router = createBrowserRouter([
       </Layout>
     ),
     children: [
-      { index: true, element: <Navigate to="/weather/215854" /> },
+      { index: true, element: <LocationWrapper /> },
       {
         path: "/login",
         element: <Login key="foo" type="login" />,

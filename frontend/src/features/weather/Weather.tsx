@@ -1,8 +1,9 @@
-import { useParams } from "react-router-dom"
+import { Navigate, useNavigate, useParams } from "react-router-dom"
 import CurrentConditions from "./CurrentConditions.js"
 import Search from "./Search.js"
 
 import { Box, Button, CircularProgress, Stack } from "@mui/material"
+import { useLayoutEffect } from "react"
 import {
   useAddFavoriteMutation,
   useGetLocationQuery,
@@ -34,9 +35,14 @@ const Weather = () => {
   const { data, isLoading, isFetching, isError } = useGetLocationQuery(cityKey)
   const [addFavorite] = useAddFavoriteMutation()
   const [removeFavorite] = useRemoveFavoriteMutation()
+  
 
   if (isLoading || isFetching || isError) {
-    return <CircularProgress/>
+    return <CircularProgress />
+  }
+
+  if (!cityKey) {
+    return <Navigate to="/weather/215854" />
   }
 
   return (

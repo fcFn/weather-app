@@ -26,3 +26,12 @@ export const forecast = createCachedHandler(
   query =>
     `https://dataservice.accuweather.com/forecasts/v1/daily/5day/${query}?apikey=${process.env.ACCUWEATHER_API_KEY}&metric=true`,
 )
+
+export const getLocationByCoordinates = createCachedHandler(
+  "coordinates",
+  query =>
+    `https://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=${process.env.ACCUWEATHER_API_KEY}&q=${query}&toplevel=true`,
+  (result: any) => ({
+    key: result.Key,
+  }),
+)
