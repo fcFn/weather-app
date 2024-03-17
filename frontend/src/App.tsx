@@ -72,7 +72,12 @@ const App = () => {
           Data by{" "}
           <a href="https://www.accuweather.com">
             <img
-              style={{ height: "16px", verticalAlign: "text-top", paddingRight: "5px" }}
+              style={{
+                height: "16px",
+                verticalAlign: "text-top",
+                paddingRight: "5px",
+                filter: theme.palette.mode === "dark" ? "invert(1)" : "invert(0)",
+              }}
               alt="Accuweather logo"
               src={AccuWeatherLogo}
             />
