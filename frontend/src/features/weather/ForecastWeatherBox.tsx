@@ -55,7 +55,7 @@ const ForecastWeatherBox = ({
         ) : (
           <p>
             <WeatherValue value={day.Temperature.Maximum.Value} />
-            /
+            &nbsp;/&nbsp;
             <WeatherValue value={day.Temperature.Minimum.Value} />
           </p>
         )}
