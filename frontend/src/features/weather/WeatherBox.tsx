@@ -1,4 +1,4 @@
-import { Box, Card, CardContent, Skeleton } from "@mui/material"
+import { Box, Card, CardContent, Skeleton, Typography } from "@mui/material"
 
 const CurrentWeatherBox = ({
   weatherData,
@@ -19,8 +19,12 @@ const CurrentWeatherBox = ({
     >
       <CardContent sx={{ display: "flex", height: "100%", justifyContent: "space-between" }}>
         <Box>
-          {cityData ? <h2>{cityData?.LocalizedName}</h2> : <Skeleton variant="text" />}
-          {cityData ? <h4>{cityData?.Country.LocalizedName}</h4> : <Skeleton variant="text" />}
+          {cityData ? <Typography variant="h5">{cityData?.LocalizedName}</Typography> : <Skeleton variant="text" />}
+          {cityData ? (
+            <Typography variant="h6">{cityData?.Country.LocalizedName}</Typography>
+          ) : (
+            <Skeleton variant="text" />
+          )}
         </Box>
         <Box
           sx={{
@@ -38,8 +42,8 @@ const CurrentWeatherBox = ({
           ) : (
             <Skeleton variant="rectangular" width={100} height={60} />
           )}
-          {weatherData ? <p>{weatherData.WeatherText}</p> : <Skeleton variant="text" />}
-          {weatherData ? <p>{weatherData.Temperature.Metric.Value}°C</p> : <Skeleton variant="text" />}
+          {weatherData ? <Typography>{weatherData.WeatherText}</Typography> : <Skeleton variant="text" />}
+          {weatherData ? <Typography>{weatherData.Temperature.Metric.Value}°C</Typography> : <Skeleton variant="text" />}
         </Box>
       </CardContent>
     </Card>

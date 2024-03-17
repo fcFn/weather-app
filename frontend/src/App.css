@@ -42,8 +42,12 @@
   background: none !important;
   border: none;
   padding: 0 !important;
-  color: -webkit-link;
+  color: inherit;
   text-decoration: underline;
   cursor: pointer;
   font-size: inherit;
+}
+
+a {
+  color: inherit;
 }

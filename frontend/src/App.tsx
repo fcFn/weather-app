@@ -8,8 +8,10 @@ import AccuWeatherLogo from "../assets/accuweather_logo.svg"
 import "./App.css"
 import Login from "./features/auth/Login"
 import Favorites from "./features/favorites/Favorites"
-import Weather from "./features/weather/Weather"
 import Layout from "./features/layout/Layout.js"
+import Weather from "./features/weather/Weather"
+import { ThemeProvider, createTheme } from "@mui/material"
+import { createContext, useState, useMemo } from "react"
 
 const router = createBrowserRouter([
   {
@@ -38,22 +40,46 @@ const router = createBrowserRouter([
   },
 ])
 
+export const ColorModeContext = createContext({ toggleColorMode: () => {} })
+
 const App = () => {
+  const [mode, setMode] = useState<"light" | "dark">("light")
+  const colorMode = useMemo(
+    () => ({
+      toggleColorMode: () => {
+        setMode(prevMode => (prevMode === "light" ? "dark" : "light"))
+      },
+    }),
+    [],
+  )
+
+  const theme = useMemo(
+    () =>
+      createTheme({
+        palette: {
+          mode,
+        },
+      }),
+    [mode],
+  )
+
   return (
-    <>
-      <CssBaseline />
-      <RouterProvider router={router} />
-      <span style={{ position: "fixed", bottom: "0", right: "0" }}>
-        Data by{" "}
-        <a href="https://www.accuweather.com">
-          <img
-            style={{ height: "16px", verticalAlign: "text-top", paddingRight: "5px" }}
-            alt="Accuweather logo"
-            src={AccuWeatherLogo}
-          />
-        </a>
-      </span>
-    </>
+    <ColorModeContext.Provider value={colorMode}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <RouterProvider router={router} />
+        <span style={{ position: "fixed", bottom: "0", right: "0" }}>
+          Data by{" "}
+          <a href="https://www.accuweather.com">
+            <img
+              style={{ height: "16px", verticalAlign: "text-top", paddingRight: "5px" }}
+              alt="Accuweather logo"
+              src={AccuWeatherLogo}
+            />
+          </a>
+        </span>
+      </ThemeProvider>
+    </ColorModeContext.Provider>
   )
 }
 

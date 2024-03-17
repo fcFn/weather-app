@@ -1,6 +1,7 @@
-import { Box, Skeleton, Stack } from "@mui/material"
+import { Box, Skeleton, Stack, Typography } from "@mui/material"
 import { Link, useLocation, useParams } from "react-router-dom"
 import { useGetUserQuery, useLogoutMutation } from "../api/apiSlice"
+import ThemeToggler from "../theme-toggler/ThemeToggler.js"
 
 const Navigation = () => {
   const { data: user, isLoading } = useGetUserQuery()
@@ -33,17 +34,20 @@ const Navigation = () => {
         Welcome, {user?.username ?? "Guest"}
       </Box>
       <Stack mb="1rem" direction="row" gap={2}>
-        <Link to={`/weather/${cityKey}`}>Weather</Link>
+        <Link to={`/weather/${cityKey}`}>
+          <Typography>Weather</Typography>
+        </Link>
         {links.map((link, index) => (
           <Link key={index} to={link.to} state={{ cityKey }}>
-            {link.text}
+            <Typography>{link.text}</Typography>
           </Link>
         ))}
         {user?.username && (
           <button className="link-button" onClick={() => logout()}>
-            Logout
+            <Typography>Logout</Typography>
           </button>
         )}
+        <ThemeToggler />
       </Stack>
     </Stack>
   )
