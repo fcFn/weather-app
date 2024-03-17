@@ -68,6 +68,11 @@ const Search = () => {
       <Autocomplete
         getOptionLabel={option => (typeof option === "string" ? option : `${option.city}, ${option.country}`)}
         options={options}
+        renderOption={(props, option) => (
+          <li {...props} key={option.key}>
+            {option.city}, {option.country}
+          </li>
+        )}
         autoComplete
         loading={open && options.length === 0}
         loadingText="Loading..."
