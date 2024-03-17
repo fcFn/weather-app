@@ -1,4 +1,4 @@
-import { Box, Skeleton, Stack, Typography, useTheme } from "@mui/material"
+import { Box, Skeleton, Stack, Typography } from "@mui/material"
 import { Link, useLocation, useParams } from "react-router-dom"
 import { useGetUserQuery, useLogoutMutation } from "../api/apiSlice"
 import ThemeToggler from "../theme-toggler/ThemeToggler.js"
@@ -30,26 +30,30 @@ const Navigation = () => {
       <Skeleton variant="text" sx={{ flex: "1 0 auto" }} />
     </Stack>
   ) : (
-    <Stack mb="1rem" direction="row" alignItems={"center"}>
+    <Stack mb="1rem" direction={{ sm: "row" }} alignItems={{ sm: "center" }}>
       <Box sx={{ flex: "1 0 auto", textAlign: "left" }} component="span">
         Welcome, {user?.username ?? "Guest"}
       </Box>
-      <Stack alignItems={"center"} direction="row" gap={2}>
-        <Link to={`/weather/${cityKey}`}>
-          <Typography>Weather</Typography>
-        </Link>
-        {links.map((link, index) => (
-          <Link key={index} to={link.to} state={{ cityKey }}>
-            <Typography>{link.text}</Typography>
+      <Stack alignItems={"center"} gap={2} direction="row" justifyContent="space-between">
+        <Stack direction="row" gap={2}>
+          <Link to={`/weather/${cityKey}`}>
+            <Typography>Weather</Typography>
           </Link>
-        ))}
-        {user?.username && (
-          <button className="link-button" onClick={() => logout()}>
-            <Typography>Logout</Typography>
-          </button>
-        )}
-        <UnitSwitch />
-        <ThemeToggler />
+          {links.map((link, index) => (
+            <Link key={index} to={link.to} state={{ cityKey }}>
+              <Typography>{link.text}</Typography>
+            </Link>
+          ))}
+          {user?.username && (
+            <button className="link-button" onClick={() => logout()}>
+              <Typography>Logout</Typography>
+            </button>
+          )}
+        </Stack>
+        <Stack direction="row">
+          <UnitSwitch />
+          <ThemeToggler />
+        </Stack>
       </Stack>
     </Stack>
   )
