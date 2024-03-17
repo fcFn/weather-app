@@ -1,4 +1,5 @@
 import { Card, CardContent, Skeleton } from "@mui/material"
+import WeatherValue from "./WeatherValue.js"
 
 interface DailyForecastDay {
   Date: string
@@ -53,7 +54,9 @@ const ForecastWeatherBox = ({
           <Skeleton variant="text" />
         ) : (
           <p>
-            {day.Temperature.Maximum.Value}°C / {day.Temperature.Minimum.Value}°C
+            <WeatherValue value={day.Temperature.Maximum.Value} />
+            /
+            <WeatherValue value={day.Temperature.Minimum.Value} />
           </p>
         )}
       </CardContent>

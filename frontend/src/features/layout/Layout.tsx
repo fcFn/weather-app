@@ -1,6 +1,6 @@
 import { Alert, Box, Container, Snackbar } from "@mui/material"
 import { useAppDispatch, useAppSelector } from "../../app/hooks.js"
-import Navigation from "../navigation/Navigation.js"
+import Header from "../header/Header.js"
 import { closeSnackbar } from "../snackbar/snackbarSlice.js"
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
@@ -22,7 +22,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
           </Box>
         </Box>
       </Box>
-      <Navigation />
+      <Header />
       {children}
       <Snackbar
         anchorOrigin={{ vertical: "top", horizontal: "center" }}

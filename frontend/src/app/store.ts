@@ -3,11 +3,12 @@ import { combineSlices, configureStore } from "@reduxjs/toolkit"
 import { setupListeners } from "@reduxjs/toolkit/query"
 import { apiSlice } from "../features/api/apiSlice"
 import { snackbarSlice } from "../features/snackbar/snackbarSlice.js"
+import { weatherSlice } from "../features/weather/weatherSlice.js"
 import { rtkQueryGenericErrorHandler } from "./middlewares.js"
 
 // `combineSlices` automatically combines the reducers using
 // their `reducerPath`s, therefore we no longer need to call `combineReducers`.
-const rootReducer = combineSlices(apiSlice, snackbarSlice)
+const rootReducer = combineSlices(apiSlice, snackbarSlice, weatherSlice)
 // Infer the `RootState` type from the root reducer
 export type RootState = ReturnType<typeof rootReducer>
 

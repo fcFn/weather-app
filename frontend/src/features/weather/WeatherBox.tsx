@@ -1,4 +1,5 @@
 import { Box, Card, CardContent, Skeleton, Typography } from "@mui/material"
+import WeatherValue from "./WeatherValue.js"
 
 const CurrentWeatherBox = ({
   weatherData,
@@ -43,7 +44,13 @@ const CurrentWeatherBox = ({
             <Skeleton variant="rectangular" width={100} height={60} />
           )}
           {weatherData ? <Typography>{weatherData.WeatherText}</Typography> : <Skeleton variant="text" />}
-          {weatherData ? <Typography>{weatherData.Temperature.Metric.Value}°C</Typography> : <Skeleton variant="text" />}
+          {weatherData ? (
+            <Typography>
+              <WeatherValue value={weatherData.Temperature.Metric.Value} />
+            </Typography>
+          ) : (
+            <Skeleton variant="text" />
+          )}
         </Box>
       </CardContent>
     </Card>
