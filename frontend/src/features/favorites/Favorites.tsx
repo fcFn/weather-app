@@ -1,7 +1,7 @@
 // This component displays the favorites using the useGetUserQuery hook from the generated API. It also uses the useAddFavoriteMutation and useRemoveFavoriteMutation hooks to add and remove favorites.
 // It reuses the CurrentConditions component to display the current weather in the favorite location.
 
-import { Box, Stack } from "@mui/material"
+import { Box, CircularProgress, Stack } from "@mui/material"
 import { useNavigate } from "react-router"
 import { useGetUserQuery } from "../api/apiSlice.js"
 import CurrentConditions from "../weather/CurrentConditions.js"
@@ -18,7 +18,7 @@ const Favorites = () => {
     <div>
       <h1>Favorites</h1>
       {isLoading ? (
-        <div>Loading...</div>
+        <CircularProgress>Loading...</CircularProgress>
       ) : (
         <>
           {user?.favorites && user.favorites?.length > 0 ? (

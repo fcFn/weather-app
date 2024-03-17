@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom"
 import CurrentConditions from "./CurrentConditions.js"
 import Search from "./Search.js"
 
-import { Box, Button, Stack } from "@mui/material"
+import { Box, Button, CircularProgress, Stack } from "@mui/material"
 import {
   useAddFavoriteMutation,
   useGetLocationQuery,
@@ -36,7 +36,7 @@ const Weather = () => {
   const [removeFavorite] = useRemoveFavoriteMutation()
 
   if (isLoading || isFetching || isError) {
-    return <div>Loading...</div>
+    return <CircularProgress>Loading...</CircularProgress>
   }
 
   return (
